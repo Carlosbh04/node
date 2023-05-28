@@ -20,11 +20,13 @@ async function main() {
     const name = await question('Ingrese el name: ');
     const surname = await question('Ingrese el surname: ');
     const age = await question('Ingrese el age: ');
+    const hobbie = await question('ingrese su hobbie: ');
 
     const objeto = {
       name: name,
       surname: surname,
-      age: parseInt(age)
+      age: parseInt(age),
+      Hobbie: hobbie,
     };
 
     const json = JSON.stringify(objeto);
