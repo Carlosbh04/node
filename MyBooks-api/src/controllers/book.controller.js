@@ -40,7 +40,7 @@ const createBook = (req, res) => {
   const newBook = new Book(title, type, author, price, photo, id_user, id_book);
   books[id_book] = newBook;
   saveBooks(); // Guardar la lista actualizada en el archivo JSON
-  res.send('Libro añadido correctamente');
+  res.send(newBook); // Devolver el libro creado como respuesta
 };
 
 const updateBook = (req, res) => {
@@ -61,7 +61,7 @@ const updateBook = (req, res) => {
     if (id_user) book.id_user = id_user;
 
     saveBooks(); // Guardar la lista actualizada en el archivo JSON
-    res.send('Libro modificado correctamente');
+    res.send(book); // Devolver el libro modificado como respuesta
   } else {
     res.status(404).send('Libro no encontrado');
   }
@@ -71,9 +71,10 @@ const deleteBook = (req, res) => {
   const { id_book } = req.body;
 
   if (books[id_book]) {
+    const book = books[id_book];
     delete books[id_book];
     saveBooks(); // Guardar la lista actualizada en el archivo JSON
-    res.send('Libro eliminado correctamente');
+    res.send(book); // Devolver el libro eliminado como respuesta
   } else {
     res.status(404).send('Libro no encontrado');
   }
