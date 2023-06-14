@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    background-color: aqua;
+    height: 100vh;
+    background-image: url('../src/img/14709.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+@font-face {
+    font-family: 'Pokemon Hollow';
+    src: url('ruta-de-la-fuente/Pokemon Hollow.ttf') format('truetype');
+}
+
+h1 {
+    font-family: 'Pokemon Hollow', cursive;
+    font-size: 58px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: rgb(233, 244, 18); /* Cambiar los valores RGB según tu preferencia */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(0, 0, 0); /* Cambiar los valores RGB según tu preferencia */
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    padding: 5px;
+}
+
+button {
+    padding: 5px 10px;
+}
+
+.card {
+    border: 3px solid rgb(228, 215, 211);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 50px;
+    /* margin-bottom: 30px; */
+    text-align: center;
+    background-image: linear-gradient(rgb(241, 191, 11), rgb(87, 227, 146)); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
+                0 0 20px rgb(255, 0, 0);
+    animation: appearCard 1s ease-in-out;
+}
+
+@keyframes appearCard {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.card ul li {
+    margin-bottom: 5px;
+}
+
+#pokeballContainer {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+}
+
+#pokeball {
+    width: 150px;
+    height: 150px;
+    background-image: url('pokeball.png'); /* Reemplaza con la imagen de una pokeball */
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: openPokeball 1s ease-in-out;
+}
+
+@keyframes openPokeball {
+    0% {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: rotateY(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: rotateY(360deg);
+        opacity: 0;
+    }
+}
