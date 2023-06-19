@@ -1,83 +1,101 @@
 const fs = require('fs');
 const Book = require('../models/book');
 
-const filePath = 'books.json';
-let books = {};
+let books = [];
 
-function loadBooks() {
-  try {
-    const data = fs.readFileSync(filePath);
-    return JSON.parse(data);
-  } catch (error) {
-    return {};
-  }
+try {
+  const data = fs.readFileSync('books.json', 'utf8');
+  books = JSON.parse(data);
+} catch (err) {
+  console.error('Error al leer el archivo JSON:', err);
 }
 
-function saveBooks() {
-  const data = JSON.stringify(books);
-  fs.writeFileSync(filePath, data);
-}
+const getBooks = (req, res) => {
+  res.send(books);
+};
 
-books = loadBooks(); // Cargar los libros desde el archivo JSON
+const getBookById = (req, res) => {
+  const { id } = req.params;
+  console.log('ID recibido:', id); // Verifica si el ID se recibe correctamente
+  const book = books.find((book) => book.id_book == id);
 
-const getBook = (req, res) => {
-  const { id } = req.query;
-
-  if (id) {
-    const book = books[id];
-    if (book) {
-      res.send(book);
-    } else {
-      res.status(404).send('No existe ningún libro con la id solicitada');
-    }
+  if (book) {
+    res.send(book);
   } else {
-    res.send(Object.values(books));
+    console.log('Libros disponibles:', books); // Verifica los libros cargados en el array
+    res.status(404).send('No existe ningún libro con la id solicitada');
   }
 };
 
-const createBook = (req, res) => {
-  const { title, type, author, price, photo, id_user, id_book } = req.body;
-  const newBook = new Book(title, type, author, price, photo, id_user, id_book);
-  books[id_book] = newBook;
-  saveBooks(); // Guardar la lista actualizada en el archivo JSON
-  res.send(newBook); // Devolver el libro creado como respuesta
+const addBook = (req, res) => {
+  const { title, type, author, price, photo, id_book, id_user } = req.body;
+  const book = new Book(title, type, author, price, photo, id_book, id_user);
+  books.push(book);
+
+  saveBooksToJson();
+
+  const answer = 'Libro añadido correctamente';
+  res.redirect('/book'); // Redirigir al cliente a la página de libros
 };
 
 const updateBook = (req, res) => {
-  const { id_book, new_id_book, title, type, author, price, photo, id_user } = req.body;
-  const book = books[id_book];
+  const { id } = req.params;
+  const { title, type, author, price, photo, id_book, id_user } = req.body;
+  const book = books.find((book) => book.id_book == id);
 
   if (book) {
-    if (new_id_book) {
-      books[new_id_book] = book;
-      delete books[id_book];
-      book.id_book = new_id_book;
-    }
     if (title) book.title = title;
     if (type) book.type = type;
     if (author) book.author = author;
     if (price) book.price = price;
     if (photo) book.photo = photo;
+    if (id_book) book.id_book = id_book;
     if (id_user) book.id_user = id_user;
 
-    saveBooks(); // Guardar la lista actualizada en el archivo JSON
-    res.send(book); // Devolver el libro modificado como respuesta
+    saveBooksToJson();
+
+    const answer = 'Libro modificado correctamente';
+    res.redirect('/book'); // Redirigir al cliente a la página de libros
   } else {
-    res.status(404).send('Libro no encontrado');
+    const answer = 'No existe ningún libro con la id solicitada';
+    res.status(404).send(answer);
   }
 };
 
 const deleteBook = (req, res) => {
-  const { id_book } = req.body;
+  const bookId = req.params.id; 
+  let answer = false;
 
-  if (books[id_book]) {
-    const book = books[id_book];
-    delete books[id_book];
-    saveBooks(); // Guardar la lista actualizada en el archivo JSON
-    res.send(book); // Devolver el libro eliminado como respuesta
-  } else {
-    res.status(404).send('Libro no encontrado');
+  // Buscar el índice del libro en el arreglo books
+  const index = books.findIndex(book => book.id_book === bookId);
+
+  if (index !== -1) {
+    // Eliminar el libro del arreglo books
+    const deletedBook = books.splice(index, 1)[0];
+    answer = true;
+
+    // Actualizar el archivo JSON
+    saveBooksToJson();
+
+    console.log('Libro eliminado correctamente');
+  }
+
+  res.send(answer);
+};
+
+
+const searchBookById = (id) => {
+  return books.find((book) => book.id_book == id);
+};
+
+const saveBooksToJson = () => {
+  try {
+    const jsonData = JSON.stringify(books, null, 2);
+    fs.writeFileSync('books.json', jsonData, 'utf8');
+    console.log('Libros guardados en el archivo JSON');
+  } catch (err) {
+    console.error('Error al guardar los libros en el archivo JSON:', err);
   }
 };
 
-module.exports = { getBook, createBook, updateBook, deleteBook };
+module.exports = { getBooks, getBookById, addBook, updateBook, deleteBook, searchBookById };
