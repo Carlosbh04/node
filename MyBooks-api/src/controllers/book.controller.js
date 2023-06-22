@@ -39,48 +39,46 @@ const addBook = (req, res) => {
 };
 
 const updateBook = (req, res) => {
-  const { id } = req.params;
-  const { title, type, author, price, photo, id_book, id_user } = req.body;
-  const book = books.find((book) => book.id_book == id);
+  const { id_book } = req.body;
+  const book = books.find((book) => book.id_book == id_book);
 
   if (book) {
-    if (title) book.title = title;
-    if (type) book.type = type;
-    if (author) book.author = author;
-    if (price) book.price = price;
-    if (photo) book.photo = photo;
-    if (id_book) book.id_book = id_book;
-    if (id_user) book.id_user = id_user;
+    // Actualizar los campos del libro utilizando los datos del cuerpo de la solicitud
+    if (req.body.title) book.title = req.body.title;
+    if (req.body.type) book.type = req.body.type;
+    if (req.body.author) book.author = req.body.author;
+    if (req.body.price) book.price = req.body.price;
+    if (req.body.photo) book.photo = req.body.photo;
+    if (req.body.id_user) book.id_user = req.body.id_user;
 
     saveBooksToJson();
 
-    const answer = 'Libro modificado correctamente';
     res.redirect('/book'); // Redirigir al cliente a la página de libros
   } else {
-    const answer = 'No existe ningún libro con la id solicitada';
-    res.status(404).send(answer);
+    res.status(404).send('No existe ningún libro con la id solicitada');
   }
 };
 
 const deleteBook = (req, res) => {
-  const bookId = req.params.id; 
-  let answer = false;
+  const { id_book } = req.body;
 
-  // Buscar el índice del libro en el arreglo books
-  const index = books.findIndex(book => book.id_book === bookId);
-
-  if (index !== -1) {
-    // Eliminar el libro del arreglo books
-    const deletedBook = books.splice(index, 1)[0];
-    answer = true;
-
-    // Actualizar el archivo JSON
-    saveBooksToJson();
-
-    console.log('Libro eliminado correctamente');
+  let answer;
+  let i = 0;
+  while (i < books.length) {
+    if (id_book == books[i].id_book) {
+      books.splice(i, 1);
+      answer = "Libro eliminado correctamente";
+      saveBooksToJson();
+      break;
+    }
+    i++;
   }
 
-  res.send(answer);
+  if (answer) {
+    res.send({ success: true, message: answer });
+  } else {
+    res.status(404).send('No existe ningún libro con la id solicitada');
+  }
 };
 
 

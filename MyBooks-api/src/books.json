@@ -1,29 +1,29 @@
 [
   {
+    "title": "El último Deseo",
+    "type": "Novel",
+    "author": "Andrzej Sapkowski",
+    "price": 20.99,
+    "photo": "https://3.bp.blogspot.com/-BCa0rROFGOA/W8InsxIi9uI/AAAAAAAAHFA/eaUjuXir7fcVfaBSLT8ypZHdw4YuwWOsACEwYBhgL/s1600/ultimo-deseo-alamut.jpg",
+    "id_book": 2562,
+    "id_user": 0
+  },
+  {
     "title": "El Nombre del Viento",
     "type": "Novel",
     "author": "Patrick Rothfuss",
-    "price": 10,
-    "photo": "http://lahistoriadekvothe.com/wp-content/uploads/2011/07/Pantalla_3_1280x1024-1024x819.png",
+    "price": 16.87,
+    "photo": "https://www.cronicadelasesinodereyes.com/wp-content/uploads/2017/02/el-nombre-del-viento.png",
     "id_book": 2566,
     "id_user": 0
   },
   {
-    "title": "El Temor de un Hombre Sabio",
+    "title": "La Musica del Silencio",
     "type": "Novel",
     "author": "Patrick Rothfuss",
-    "price": 20.99,
-    "photo": "https://m.media-amazon.com/images/I/91eNkfqEklL._AC_UF1000,1000_QL80_.jpg",
-    "id_book": 2567,
-    "id_user": 0
-  },
-  {
-    "title": "Harry Potter y la piedra filosofal",
-    "type": "Novel",
-    "author": "J. K. Rowling",
-    "price": 18.89,
-    "photo": "https://kbimages1-a.akamaihd.net/3b0fa9bf-5684-4d0a-9ba1-53ca66cba86e/1200/1200/False/harry-potter-y-la-piedra-filosofal-5.jpg",
-    "id_book": 2568,
+    "price": 19.99,
+    "photo": "https://juanjelopezponeletras.files.wordpress.com/2014/10/la-mc3basica-del-silencio-patrick-rothfuss.jpg",
+    "id_book": 2564,
     "id_user": 0
   }
 ]
