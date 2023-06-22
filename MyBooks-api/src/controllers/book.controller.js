@@ -40,24 +40,24 @@ const addBook = (req, res) => {
 
 const updateBook = (req, res) => {
   const { id_book } = req.body;
-  const book = books.find((book) => book.id_book == id_book);
+  const bookIndex = books.findIndex((book) => book.id_book == id_book);
 
-  if (book) {
+  if (bookIndex !== -1) {
     // Actualizar los campos del libro utilizando los datos del cuerpo de la solicitud
-    if (req.body.title) book.title = req.body.title;
-    if (req.body.type) book.type = req.body.type;
-    if (req.body.author) book.author = req.body.author;
-    if (req.body.price) book.price = req.body.price;
-    if (req.body.photo) book.photo = req.body.photo;
-    if (req.body.id_user) book.id_user = req.body.id_user;
+    for (let field in req.body) {
+      if (field !== 'id_book' && field !== 'id_user') {
+        books[bookIndex][field] = req.body[field];
+      }
+    }
 
     saveBooksToJson();
 
-    res.redirect('/book'); // Redirigir al cliente a la página de libros
+    res.send({ success: true, message: 'Libro actualizado correctamente' });
   } else {
     res.status(404).send('No existe ningún libro con la id solicitada');
   }
 };
+
 
 const deleteBook = (req, res) => {
   const { id_book } = req.body;

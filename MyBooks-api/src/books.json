@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "title": "El camino de los reyes ",
+    "type": "pelicula",
+    "author": "Brandon Sanderson",
+    "price": 20.99,
+    "photo": "https://sigueenserie.files.wordpress.com/2019/09/ebk91779.jpg",
+    "id_book": 2564,
+    "id_user": 1234
+  }
+]
